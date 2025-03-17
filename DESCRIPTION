@@ -1,13 +1,11 @@
 Package: snply
 Title: SNP Analysis and Shiny App Visualisation
 Version: 0.1.0
-Authors@R: 
-    person("Ishika", "Johar", email = "i.johar@se24.qmul.ac.uk", role = c("aut", "cre")),
-    person("Zahedul", "Islam", email = "z.islam@se24.qmul.ac.uk", role = "ctb")
+Authors@R: c(person("Ishika", "Johar", email = "i.johar@se24.qmul.ac.uk", role = c("aut", "cre")),
+             person("Zahedul", "Islam", email = "z.islam@se24.qmul.ac.uk", role = c("ctb")))
 Description: A package for analysing SNP data and visualising results via a Shiny app, including Neanderthal content, PCA plotting, and chromosome ancestry.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Imports: 
-    shiny
+Imports: shiny
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2.9000
