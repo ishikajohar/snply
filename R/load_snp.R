@@ -28,10 +28,10 @@ load_snp_data <- function(file_path) {
 
 # TEST
 # Define file path
-snp_file <- "/Users/ishikajohar/SNP_analysis_Project/snply/R/blank.23andme.txt"
+#snp_file <- "file path"
 
 # Load SNP data
-snp_data <- load_snp_data(snp_file)
+#snp_data <- load_snp_data(snp_file)
 
 # View first few rows
-head(snp_data)
+#head(snp_data)
