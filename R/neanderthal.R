@@ -19,7 +19,8 @@
 #' @return A named list with the following elements:
 #' \describe{
 #'   \item{\code{count}}{Total number of Neanderthal-derived allele copies the user has at the matched SNPs.}
-#'   \item{\code{percentage}}{Percentage of the user's alleles (at those SNPs) that are Neanderthal-derived. This is computed as \code{100 * (total archaic allele copies) / (2 * number of matched SNPs)}.}
+#'   \item{\code{percentage}}{Percentage of the user's alleles
+#'   (at those SNPs) that are Neanderthal-derived. This is computed as \code{100 * (total archaic allele copies) / (2 * number of matched SNPs)}.}
 #'   \item{\code{phenotypes}}{A data frame with one row per matched SNP, containing the SNP identifier and selected phenotype annotations.
 #'         In this version, only the following columns are included: rsid, chromosome, position, Hair colour, Skin colour, Weight, Standing height, and Ease of skin tanning.}
 #' }
@@ -107,3 +108,10 @@ calculate_neanderthal_alleles <- function(user_file, ref_file) {
     phenotypes = phenotypes_df
   )
 }
+
+result <- calculate_neanderthal_alleles("C:/Users/30694/Downloads/user_snps.txt",
+                                        "C:/Users/30694/Downloads/Data/neander_snps.rds.xlsx")
+print(result$count)
+print(result$percentage)
+head(result$phenotypes)
+
