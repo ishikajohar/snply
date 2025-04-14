@@ -1,0 +1,30 @@
+PLINK v1.90b6.27 64-bit (10 Dec 2022)
+Options in effect:
+  --double-id
+  --make-bed
+  --out 1000G_phase3_autosomes_23andme
+  --vcf 1000G_phase3_autosomes_23andme.vcf.gz
+
+Hostname: sdx24
+Working directory: /data/home/bt24140/snply
+Start time: Thu Apr  3 13:45:00 2025
+
+Random number seed: 1743684300
+386123 MB RAM detected; reserving 193061 MB for main workspace.
+--vcf: 1000G_phase3_autosomes_23andme-temporary.bed +
+1000G_phase3_autosomes_23andme-temporary.bim +
+1000G_phase3_autosomes_23andme-temporary.fam written.
+909825 variants loaded from .bim file.
+2504 people (0 males, 0 females, 2504 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to 1000G_phase3_autosomes_23andme.nosex .
+Using 1 thread.
+Before main variant filters, 2504 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.999867.
+909825 variants and 2504 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to 1000G_phase3_autosomes_23andme.bed +
+1000G_phase3_autosomes_23andme.bim + 1000G_phase3_autosomes_23andme.fam ...
+done.
+
+End time: Thu Apr  3 13:45:25 2025

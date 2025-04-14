@@ -2,45 +2,16 @@
 % Please edit documentation in R/neanderthal.R
 \name{calculate_neanderthal_alleles}
 \alias{calculate_neanderthal_alleles}
-\title{Calculate Neanderthal-derived Allele Percentage and Count}
+\title{Calculate Neanderthal Alleles Summary}
 \usage{
-calculate_neanderthal_alleles(user_file, ref_file)
+calculate_neanderthal_alleles(user_file)
 }
 \arguments{
-\item{user_file}{Path to the user’s SNP data file (23andMe format). Can be a relative or absolute path, using forward slashes or Windows-style backslashes.}
-
-\item{ref_file}{Path to the reference Excel file from the Neanderthal phenotype study.
-The Excel file should have column names in row 4 (with the first 3 rows being metadata or headers to skip).}
+\item{user_file}{Path to the user's 23andMe genotype file.}
 }
 \value{
-A named list with the following elements:
-\describe{
-\item{\code{count}}{Total number of Neanderthal-derived allele copies the user has at the matched SNPs.}
-\item{\code{percentage}}{Percentage of the user's alleles (at those SNPs) that are Neanderthal-derived. This is computed as \code{100 * (total archaic allele copies) / (2 * number of matched SNPs)}.}
-\item{\code{phenotypes}}{A data frame with one row per matched SNP, containing the SNP identifier and selected phenotype annotations.
-In this version, only the following columns are included: rsid, chromosome, position, Hair colour, Skin colour, Weight, Standing height, and Ease of skin tanning.}
-}
+A list with a summary string, count of allele copies, percentage of allele copies, and a phenotype table.
 }
 \description{
-Reads a user 23andMe genotype file and a reference Excel from a Neanderthal phenotype study,
-and calculates how many Neanderthal-derived alleles the user carries at the studied SNPs.
-}
-\details{
-The reference Excel is expected to contain columns for chromosome, position, the reference and alternative alleles
-(with an asterisk marking the Neanderthal-derived allele), and various phenotype columns indicating traits
-associated with those SNPs (e.g., Hair colour, Skin colour, Weight, Standing height, Ease of skin tanning).
-The user file is a text file in 23andMe raw data format (tab-separated columns: rsid, chromosome, position, genotype).
-
-The function identifies the Neanderthal-derived allele for each SNP (the allele marked with an asterisk in the reference),
-then checks the user's genotype at those positions. It counts how many copies of the Neanderthal allele the user has (0, 1, or 2 per SNP),
-and calculates the percentage of Neanderthal-derived alleles among the matched SNPs.
-}
-\examples{
-\dontrun{
-result <- calculate_neanderthal_alleles("path/to/user_snps.txt", "path/to/neanderthal_refs.xlsx")
-print(result$count)
-print(result$percentage)
-head(result$phenotypes)
-}
-
+Orchestrates the reading, merging, and computation of Neanderthal allele statistics.
 }
