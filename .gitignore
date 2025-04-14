@@ -4,3 +4,4 @@
 .httr-oauth
 .DS_Store
 .quarto
+plink_data/1000G_phase3_autosomes_23andme.bed
