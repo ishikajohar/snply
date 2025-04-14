@@ -1,1 +1,1 @@
-plink_data/1000G_phase3_autosomes_23andme.bed filter=lfs diff=lfs merge=lfs -text
+
