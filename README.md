@@ -7,8 +7,11 @@ These functions are inspired by academic projects like the Interpretome, which d
 
 ## Installation  
 ```r
-# Install from GitHub
-devtools::install_github("yourusername/snply")
+# installation
+devtools::install_github(
+  "ishikajohar/snply",
+  ref = "feature/neanderthal",
+)
 ```
 
 ## Usage  
