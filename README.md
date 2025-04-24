@@ -16,10 +16,12 @@ devtools::install_github(
 
 ## Usage  
 ### R Functions  
-```r
+```Shiny App
+
 library(snply)
-result <- calculate_neanderthal_alleles("path/to/23andme.txt")
-print(result$summary)
+
+# Launch the Shiny app
+launchSnplyApp()
 ```
 
 ### Shiny App  
