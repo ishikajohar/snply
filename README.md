@@ -14,19 +14,15 @@ devtools::install_github(
 )
 ```
 
-## Usage  
-### R Functions  
+
+
+### Shiny App  
 ```Shiny App
 
 library(snply)
 
 # Launch the Shiny app
 launchSnplyApp()
-```
-
-### Shiny App  
-```r
-shiny::runApp(system.file("shinyapps", "app.R", package = "snply"))
 ```
 
 ## Data Sources  
