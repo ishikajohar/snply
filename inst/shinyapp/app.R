@@ -11,7 +11,7 @@ library(stringr) # Still needed if used directly elsewhere, but snply loads its 
 
 # Load your installed package (ensure it's rebuilt with the updated code)
 # Make sure 'snply' is installed and contains the updated functions
-#library(snply)
+library(snply)
 
 ui <- fluidPage(
   titlePanel("Welcome to Snply analysis"),
