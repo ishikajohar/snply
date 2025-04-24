@@ -13,6 +13,6 @@ compute_allele_statistics(merged_df)
 A list with a summary string, total allele copies, percentage of allele copies, and a phenotype table.
 }
 \description{
-For each SNP in the merged data, counts the number of Neanderthal-derived alleles in the user's genotype (0, 1, or 2)
-and computes summary statistics.
+For each SNP in the merged data, counts the number of Neanderthal-derived alleles
+in the user's genotype (0, 1, or 2) and computes summary statistics.
 }

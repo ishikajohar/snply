@@ -15,6 +15,5 @@ It detects which allele is marked with an asterisk (indicating the Neanderthal-d
 strips the asterisk, and stores that allele in a new column \code{archaic_allele}.
 }
 \details{
-The function attempts to find the CSV in the installed package's \code{extdata} directory,
-and falls back to a relative path if not found.
+The function attempts to find the CSV in the installed package's \code{extdata} directory.
 }
