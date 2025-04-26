@@ -92,26 +92,24 @@ server <- function(input, output, session) {
 
   # Render the user SNP data table preview. INCLUDES RSID and optional link.
   output$snp_table <- renderDT({
-    user_data <- snp_data_reactive()
-    req(user_data)
+    user_data_raw <- snp_data_reactive() # Use a temporary name
+    req(user_data_raw) # Require valid data frame
 
-    # --- Optional: Make RSID clickable ---
-    # Comment out the next mutate line if you don't want clickable links yet
-    user_data <- user_data %>%
+    # --- Make RSID clickable ---
+    # Directly modify the 'rsid' column to contain the HTML link string
+    user_data_linked <- user_data_raw %>%
       mutate(
-        # Create link - target="_blank" opens in new tab
-        rsid_link = paste0('<a href="https://www.ncbi.nlm.nih.gov/snp/', rsid, '" target="_blank">', rsid, '</a>'),
-        #      # Select columns, putting link first, removing original rsid
-        #      . # Keep other columns as they are
-      ) %>%
-      select(rsid = rsid_link, chromosome, position, genotype) # Rename link col to rsid for display
-    # --- End Optional ---
+        rsid = paste0('<a href="https://www.ncbi.nlm.nih.gov/snp/', .data$rsid, '" target="_blank">', .data$rsid, '</a>')
+        # Note: Using .data$rsid inside mutate is good practice
+      )
+    # No select() needed here just for links, mutate handles it.
+    # --- End ---
 
-
-    # Pass data to datatable. Add escape = FALSE if using HTML links.
+    # Pass the modified data to datatable.
+    # escape = FALSE tells DT to render the HTML in the rsid column.
     datatable(
-      user_data,
-      escape = FALSE, # UNCOMMENT THIS if using the HTML links above
+      user_data_linked, # Use the data frame with the modified rsid column
+      escape = FALSE,   # Ensure this is active for links to work
       rownames = FALSE,
       options = list(pageLength = 10, scrollX = TRUE)
     )

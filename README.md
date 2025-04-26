@@ -22,7 +22,7 @@ devtools::install_github(
 library(snply)
 
 # Launch the Shiny app
-launchSnplyApp()
+ snply::launchSnplyApp()
 ```
 
 ## Data Sources  
