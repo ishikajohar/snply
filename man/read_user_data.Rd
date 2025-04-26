@@ -2,7 +2,9 @@
 % Please edit documentation in R/neanderthal.R
 \name{read_user_data}
 \alias{read_user_data}
-\title{Read User Data (e.g., 23andMe genotype file)}
+\title{Read User Data (e.g., 23andMe genotype file)
+Reads the user's genotype file, accommodating headers that may
+or may not be commented out with '#'. Keeps rsid, chromosome, position, genotype.}
 \usage{
 read_user_data(filepath)
 }
@@ -10,10 +12,10 @@ read_user_data(filepath)
 \item{filepath}{Path to the user's genotype file.}
 }
 \value{
-A tibble with columns: chromosome, position, and genotype.
+A tibble with columns: rsid, chromosome, position, and genotype.
 }
 \description{
+Read User Data (e.g., 23andMe genotype file)
 Reads the user's genotype file, accommodating headers that may
-or may not be commented out with '#'. The file is expected to contain columns
-including rsid, chromosome, position, and genotype, typically whitespace-delimited.
+or may not be commented out with '#'. Keeps rsid, chromosome, position, genotype.
 }

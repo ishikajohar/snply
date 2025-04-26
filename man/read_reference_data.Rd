@@ -6,14 +6,6 @@
 \usage{
 read_reference_data()
 }
-\value{
-A tibble of reference SNP data with an added \code{archaic_allele} column.
-}
 \description{
-Reads the reference CSV file containing archaic SNP information.
-It detects which allele is marked with an asterisk (indicating the Neanderthal-derived allele),
-strips the asterisk, and stores that allele in a new column \code{archaic_allele}.
-}
-\details{
-The function attempts to find the CSV in the installed package's \code{extdata} directory.
+Read Reference Data (Neanderthal SNP list)
 }

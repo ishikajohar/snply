@@ -6,14 +6,6 @@
 \usage{
 merge_snp_data(ref_df, user_df)
 }
-\arguments{
-\item{ref_df}{Reference data frame from read_reference_data().}
-
-\item{user_df}{User data frame from read_user_data().}
-}
-\value{
-A merged data frame containing only the SNPs present in both datasets.
-}
 \description{
-Merges the reference archaic SNP dataset with the user's SNP dataset on chromosome and position.
+Merge Reference and User SNP Data
 }

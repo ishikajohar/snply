@@ -6,13 +6,6 @@
 \usage{
 compute_allele_statistics(merged_df)
 }
-\arguments{
-\item{merged_df}{Merged data frame from merge_snp_data().}
-}
-\value{
-A list with a summary string, total allele copies, percentage of allele copies, and a phenotype table.
-}
 \description{
-For each SNP in the merged data, counts the number of Neanderthal-derived alleles
-in the user's genotype (0, 1, or 2) and computes summary statistics.
+Compute Neanderthal Allele Statistics
 }

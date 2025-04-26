@@ -1,0 +1,5 @@
+rsid,chromosome,position,gene,disease,risk_allele,notes
+rs334,11,5227002,HBB,"Sickle Cell Anemia",T,"A->T change causes disease (homozygous)"
+rs429358,19,45411941,APOE,"Alzheimer's Disease Risk (APOE e4)",C,"Part of APOE e4 haplotype"
+rs7412,19,45412079,APOE,"Alzheimer's Disease Risk (APOE e4/e2)",C,"Part of APOE e4/e2 haplotypes"
+rs1801133,1,11796322,MTHFR,"Increased Homocysteine Risk",T,"C->T change (C677T)"

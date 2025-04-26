@@ -6,16 +6,6 @@
 \usage{
 calculate_neanderthal_alleles(user_file)
 }
-\arguments{
-\item{user_file}{Path to the user's genotype file.}
-}
-\value{
-A list containing: 'summary' (string), 'count' (numeric),
-'percentage' (numeric), and 'phenotypes' (data.frame).
-On error, the list contains an error message in 'summary' and
-default/empty values for other elements.
-}
 \description{
-Orchestrates the reading, merging, and computation of Neanderthal allele statistics.
-Includes error handling to return informative messages to the UI.
+Calculate Neanderthal Alleles Summary
 }
