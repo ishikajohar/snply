@@ -139,7 +139,7 @@ Genome-wide significant archaic variants (p < 1.0×10⁻⁸) influencing human t
                                ),
                                hr(),
                                fluidRow(
-                                 column(12, plotOutput("genomePaintingPlot", height = "900px", width = "700px"))
+                                 column(12, plotOutput("genomePaintingPlot", height = "800px"))
                                )
                              )
                            )
