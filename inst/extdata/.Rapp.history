@@ -1,0 +1,4 @@
+load("/Users/ishikajohar/snply/inst/extdata/pca_loadings.rds")
+load("/Users/ishikajohar/pca_loadings copy.rds")
+load("/Users/ishikajohar/pca_loadings copy.rds")
+load("/Users/ishikajohar/zah1_snply/inst/extdata/pca_loadings.rds")

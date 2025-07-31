@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
+plink_data/1000G_phase3_autosomes_23andme.bed
+plink_win64/
+# Ignore specific file
+#r_snps.rds.xlsx
+
+# Or ignore all Excel files
+*.xlsx
+
+
+
+
