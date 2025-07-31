@@ -139,7 +139,7 @@ Genome-wide significant archaic variants (p < 1.0×10⁻⁸) influencing human t
                                ),
                                hr(),
                                fluidRow(
-                                 column(12, plotOutput("genomePaintingPlot", height = "800px"))
+                                 column(12, plotOutput("genomePaintingPlot", height = "900px", width = "700px"))
                                )
                              )
                            )
@@ -210,7 +210,7 @@ server <- function(input, output, session) {
     dt <- melt(
       as.data.table(blocks)[CHR==chrom],
       id.vars       = c("CHR","start","end"),
-      measure       = list(c("hap1","hap2")),
+      measure.vars  = c("hap1","hap2"),
       variable.name = "haplotype",
       value.name    = "ancestry"
     )
@@ -239,123 +239,122 @@ server <- function(input, output, session) {
 
 
   # Updated plotting function for full ancestry painting across all chromosomes
+
   plot_all_chromosomes <- function(paint_mc_result, pop_cols, snp_counts){
-    # 1) Melt hap1 / hap2 into long form
-    paint_df <- as.data.table(paint_mc_result)[, .(CHR, start, end, hap1, hap2)]
+    library(data.table)
+    library(ggplot2)
+
+    # 1) Melt hap1/hap2 into long form (no more melt warnings!)
+    dt <- as.data.table(paint_mc_result)[, .(CHR, start, end, hap1, hap2)]
     paint_df <- melt(
-      paint_df,
+      dt,
       id.vars       = c("CHR","start","end"),
-      measure.vars  = c("hap1","hap2"),
+      measure.vars  = c("hap1","hap2"),     # <- use a character vector
       variable.name = "haplotype",
-      value.name    = "population"
+      value.name    = "ancestry"
     )
 
-    # 2) Chromosome factor
+    # 2) Chromosome factor & numeric index
     chrom_levels <- c(as.character(1:22),"X","Y")
     paint_df[, chromosome := factor(
       ifelse(CHR=="23","X",
-             ifelse(CHR=="24","Y", CHR)
-      ),
+             ifelse(CHR=="24","Y", CHR)),
       levels = chrom_levels
     )]
+    paint_df[, chr_idx := as.numeric(chromosome)]
 
-    # 3) y positions for each haplotype copy
-    paint_df[, y_center := as.numeric(chromosome) +
-               ifelse(haplotype=="hap1", +.25, -.25)]
-    paint_df[, `:=`(start_m = start/1e6, end_m = end/1e6)]
+    # 3) Compute rectangle edges for each haplotype
+    paint_df[, `:=`(
+      x_min    = start/1e6,
+      x_max    = end/1e6,
+      y_bottom = chr_idx + ifelse(haplotype=="hap1", -0.2, +0.2),
+      y_top    = chr_idx + ifelse(haplotype=="hap1",  0.0,  0.4)
+    )]
 
-    # 4) get centromere & heterochromatin from UCSC cytoband
-    cyto <- fread(
+    # 4) Fetch UCSC cytobands (centromeres & het) quietly
+    cyto <- suppressMessages(fread(
       "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/cytoBand.txt.gz",
-      col.names = c("chr","start","end","band","stain")
-    )[, chr := gsub("chr","",chr)]
-    cen <- cyto[stain=="acen"]              # centromeres
-    het <- cyto[stain %in% c("gvar","stalk")]  # heterochromatin
+      col.names = c("chr","start","end","band","stain"),
+      showProgress = FALSE
+    ))[, chr := sub("^chr","",chr)]
+    cyto <- cyto[chr %in% chrom_levels]
+    cyto[, chr_idx := as.numeric(factor(chr, levels=chrom_levels))]
+    cen <- cyto[stain=="acen"]
+    het <- cyto[stain %in% c("gvar","stalk")]
 
-    # ─────────────────────────────────────────────────────────────────────────────
-    # 5) **Rebuild `chrom_sizes` here** so we know each chromosome’s total length:
-    chrom_sizes <- data.frame(
+    # 5) Merge in chromosome lengths so we can nudge SNP‐count labels
+    chrom_sizes <- data.table(
       chromosome = factor(chrom_levels, levels = chrom_levels),
       length     = c(
-        249250621, 243199373, 198022430, 191154276, 180915260, 171115067,
-        159138663, 146364022, 141213431, 135534747, 135006516, 133851895,
-        115169878, 107349540, 102531392,  90354753,  81195210,  78077248,
-        59128983,  63025520,  48129895,  51304566, 155270560,  59373566
+        249250621,243199373,198022430,191154276,180915260,171115067,
+        159138663,146364022,141213431,135534747,135006516,133851895,
+        115169878,107349540,102531392, 90354753, 81195210, 78077248,
+        59128983, 63025520, 48129895, 51304566,155270560, 59373566
       )
     )
-
-    # 6) Merge lengths into your snp_counts so you can shift the text label
     snp_counts <- merge(
       snp_counts,
-      chrom_sizes[, c("chromosome","length")],
+      chrom_sizes[, .(chromosome,length)],
       by = "chromosome",
       all.x = TRUE
     )
-    # ─────────────────────────────────────────────────────────────────────────────
+    snp_counts[, chr_idx := as.numeric(chromosome)]
 
-    # 7) Now draw everything
+    # 6) Build the plot
     ggplot() +
-      # heterochromatic background
+      # heterochromatin background
       geom_rect(data = het,
                 aes(xmin = start/1e6, xmax = end/1e6,
-                    ymin = as.numeric(chr) - .5,
-                    ymax = as.numeric(chr) + .5),
+                    ymin = chr_idx - 0.2,     ymax = chr_idx + 0.6),
                 fill = "grey90", color = NA) +
-      # centromeres
+      # centromere
       geom_rect(data = cen,
                 aes(xmin = start/1e6, xmax = end/1e6,
-                    ymin = as.numeric(chr) - .5,
-                    ymax = as.numeric(chr) + .5),
+                    ymin = chr_idx - 0.2,     ymax = chr_idx + 0.6),
                 fill = "black", color = NA) +
       # ancestry blocks (both haplotypes)
       geom_rect(data = paint_df,
-                aes(xmin = start_m, xmax = end_m,
-                    ymin = y_center - .2, ymax = y_center + .2,
-                    fill = population),
+                aes(xmin = x_min,   xmax = x_max,
+                    ymin = y_bottom, ymax = y_top,
+                    fill = ancestry),
                 color = NA) +
-      # SNP‐count at end of each chromosome
+      # SNP‐count labels, nudged off the right end
       geom_text(data = snp_counts,
-                aes(
-                  x     = (length / 1e6) + 5,   # convert bp→Mb and nudge 5 Mb
-                  y     = as.numeric(chromosome),
-                  label = total_snps
-                ),
+                aes(x = (length/1e6) + 5,
+                    y = chr_idx + 0.2,
+                    label = total_snps),
                 size = 3) +
+      # keep chr 1 at bottom → Y at top
       scale_y_continuous(
         breaks = seq_along(chrom_levels),
         labels = chrom_levels,
-        expand = expansion(add = .6)
+        expand = c(0.02,0)
       ) +
-      scale_fill_manual(values = unlist(pop_cols), name = "Ancestry") +
       scale_x_continuous(
-        name = "Genomic Position (Mb)",
-        expand = expansion(mult = c(0, 0.02))
+        expand = c(0,0)
+      ) +
+      scale_fill_manual(
+        name   = "Ancestry",
+        values = unlist(pop_cols)
       ) +
       labs(
-        y     = "Chromosome copy (Hap1 top, Hap2 bottom)",
-        title = "Monte Carlo Chromosome Painting"
+        title = "Monte Carlo Chromosome Painting",
+        x     = NULL,    # no x‐axis title
+        y     = NULL     # no y‐axis title
       ) +
       theme_minimal(base_size = 14) +
       theme(
-        panel.grid.major.y = element_blank(),
-        panel.grid.minor   = element_blank(),
-        axis.ticks.y       = element_blank(),
-        legend.position    = "right"
-      )
-  }
-
-
-
-
-
-  output$paint_ancestry <- renderPlotly({
-    req(blocks())
-    snply::plot_paint_blocks(
-      blocks(),
-      chrom    = input$paint_chr,
-      pop_cols = pop_cols
+        panel.grid.major.y  = element_blank(),
+        panel.grid.minor    = element_blank(),
+        axis.ticks.y        = element_blank(),
+        axis.title.x        = element_blank(),
+        axis.title.y        = element_blank(),
+        legend.position     = "right"
     )
-  })
+}
+
+
+
 
 
 

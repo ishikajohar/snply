@@ -87,11 +87,11 @@ paint_snps <- function(base_plot, snps, tick_shape = c("segment","rect")) {
     filter(!is.na(position)) %>%
     mutate(pos_Mbp = position/1e6)
 
-    # 2) Explicitly create paternal + maternal copies
-      sn2b <- bind_rows(
-          sn2 %>% mutate(copy = "paternal"),
-          sn2 %>% mutate(copy = "maternal")
-        )
+  # 2) Explicitly create paternal + maternal copies
+  sn2b <- bind_rows(
+    sn2 %>% mutate(copy = "paternal"),
+    sn2 %>% mutate(copy = "maternal")
+  )
   # 3) Grab silhouette coords (y & gap)
   sil <- base_plot$data %>% select(chr, copy, y, gap)
 
