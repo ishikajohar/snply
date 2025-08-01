@@ -270,6 +270,8 @@ server <- function(input, output, session) {
       y_bottom = chr_idx + ifelse(haplotype=="hap1", -0.2, +0.2),
       y_top    = chr_idx + ifelse(haplotype=="hap1",  0.0,  0.4)
     )]
+    paint_df_no_XY <- paint_df[!(chromosome %in% c("X","Y"))]
+
 
     # 4) Fetch UCSC cytobands (centromeres & het) quietly
     cyto <- suppressMessages(fread(
@@ -279,8 +281,10 @@ server <- function(input, output, session) {
     ))[, chr := sub("^chr","",chr)]
     cyto <- cyto[chr %in% chrom_levels]
     cyto[, chr_idx := as.numeric(factor(chr, levels=chrom_levels))]
-    cen <- cyto[stain=="acen"]
-    het <- cyto[stain %in% c("gvar","stalk")]
+
+    # ▸ keep 1–22, drop X / Y
+    cen <- cyto[stain == "acen"            & !(chr %in% c("X","Y"))]
+    het <- cyto[stain %in% c("gvar","stalk") & !(chr %in% c("X","Y"))]
 
     # 5) Merge in chromosome lengths so we can nudge SNP‐count labels
     chrom_sizes <- data.table(
@@ -313,7 +317,7 @@ server <- function(input, output, session) {
                     ymin = chr_idx - 0.2,     ymax = chr_idx + 0.6),
                 fill = "black", color = NA) +
       # ancestry blocks (both haplotypes)
-      geom_rect(data = paint_df,
+      geom_rect(data = paint_df_no_XY,
                 aes(xmin = x_min,   xmax = x_max,
                     ymin = y_bottom, ymax = y_top,
                     fill = ancestry),
