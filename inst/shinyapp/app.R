@@ -12,7 +12,6 @@ library(data.table)
 library(leaflet)
 
 suppressPackageStartupMessages(library(snply))
-source("plot_chromosomes.R")
 
 
 
@@ -223,7 +222,7 @@ server <- function(input, output, session) {
       yend     = haplotype,
       color    = ancestry
     )) +
-      geom_segment(size=5) +
+      geom_segment(linewidth =5) +
       scale_color_manual(values=pop_cols) +
       scale_y_discrete(expand=expansion(add=.3)) +
       labs(x="Position (Mbp)", y=NULL, title=paste0("Chr ",chrom)) +

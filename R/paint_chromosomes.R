@@ -19,7 +19,6 @@
 #'   Default: c("GBR","FIN","PUR","PJL","GIH","YRI","IBS")
 #' @param min_snps_per_window Minimum overlapping SNPs per window. Default: 10.
 #' @return A data.frame with columns: chr, start, end, ancestry.
-#' @import dplyr
 #' @import data.table
 #' @importFrom stats setNames
 #' @export

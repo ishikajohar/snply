@@ -1,4 +1,0 @@
-# rsid	chromosome	position	genotype
-rs123	1	1000	AA
-rs456	1	2000	AG
-rs789	1	3000	GG

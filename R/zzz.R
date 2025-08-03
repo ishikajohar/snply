@@ -1,1 +1,4 @@
-conflicted::conflict_prefer("first", "data.table")
+# global.R
+library(conflicted)
+conflict_prefer("filter", "dplyr")
+

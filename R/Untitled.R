@@ -111,7 +111,7 @@ paint_snps <- function(base_plot, snps, tick_shape = c("segment","rect")) {
   # 5) Build the overlay layer
   layer <- if (tick_shape=="segment") {
     geom_segment(aes(x=pos_Mbp, xend=pos_Mbp, y=ymin, yend=ymax, color=colour),
-                 data=ov, size=0.5)
+                 data=ov, linewidth=0.5)
   } else {
     geom_rect(aes(xmin=pos_Mbp-0.05, xmax=pos_Mbp+0.05,
                   ymin=ymin, ymax=ymax, fill=colour),
