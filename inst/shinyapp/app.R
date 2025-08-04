@@ -30,9 +30,6 @@ pop_cols <- list(
 # --- Load Browning 2018 Introgressed Data ---
 browning_path <- system.file("extdata", "Browning2018_introgressed.tsv", package = "snply", mustWork = FALSE)
 if (browning_path == "" || !file.exists(browning_path)) {
-  # Fallback if snply package data isn't found (e.g., during development or if not installed correctly)
-  # In a deployed app, you'd likely ensure this file is always accessible.
-  # For this example, assuming it might be in the working directory if system.file fails.
   browning_path <- "Browning2018_EUR_full.tsv"
 }
 browning_df <- read_tsv(browning_path, col_types = cols(
@@ -50,8 +47,6 @@ mt_ref <- refs$mt_ref
 y_clean <- refs$y_clean
 haplo_map <- refs$haplo_map
 
-# Assuming load_aisnp_ref is a function from snply or a local helper
-# If it's a local helper, ensure its definition is present
 aisnp_ref <- snply::load_aisnp_ref()
 
 # --- UI Definition ---
@@ -243,7 +238,7 @@ server <- function(input, output, session) {
     library(data.table)
     library(ggplot2)
 
-    # 1) Melt hap1/hap2 into long form (no more melt warnings!)
+    # 1) Melt hap1/hap2 into long form (no more melt warnings)
     dt <- as.data.table(paint_mc_result)[, .(CHR, start, end, hap1, hap2)]
     paint_df <- melt(
       dt,
@@ -456,7 +451,6 @@ server <- function(input, output, session) {
 
   calc_pheno <- reactive({
     req(input$snp_file)
-    # Assuming calculate_neanderthal_alleles is a function from snply or a local helper
     snply::calculate_neanderthal_alleles(input$snp_file$datapath)
   })
 

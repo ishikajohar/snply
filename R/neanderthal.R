@@ -8,8 +8,6 @@
 #'
 NULL
 
-# read_reference_data function remains the same...
-# Paste the existing read_reference_data function code here
 #' Read Reference Data (Neanderthal SNP list)
 #' @export
 read_reference_data <- function() {
@@ -101,7 +99,7 @@ read_user_data <- function(filepath) {
   user_data <- user_data %>%
     select(all_of(standard_names))
 
-  # Ensure key columns are characters
+  #  key columns are characters
   user_data <- user_data %>%
     mutate(
       rsid = as.character(rsid), # Ensure rsid is character
@@ -109,10 +107,7 @@ read_user_data <- function(filepath) {
       position = as.character(position),
       genotype = as.character(genotype)
     )
-  # NO LONGER DROPPING rsid: select(-rsid) REMOVED
 
-  # Final check for expected columns
-  # Check for rsid as well now
   if(!all(c("rsid", "chromosome", "position", "genotype") %in% colnames(user_data))) {
     stop("Processing error: Required columns (rsid, chromosome, position, genotype) are missing after selection.")
   }
@@ -121,8 +116,6 @@ read_user_data <- function(filepath) {
 }
 
 
-# merge_snp_data function remains the same...
-# Paste the existing merge_snp_data function code here
 #' Merge Reference and User SNP Data
 #' @export
 merge_snp_data <- function(ref_df, user_df) {
@@ -149,14 +142,10 @@ merge_snp_data <- function(ref_df, user_df) {
   if(nrow(merged_df) == 0) {
     warning("No matching SNPs found between the reference data and the user file based on chromosome and position.")
   }
-  # Note: merged_df here contains archaic info + user genotype for matching sites
-  # It does NOT contain the user's rsid from the original file. This is ok for Neanderthal calc.
   return(merged_df)
 }
 
 
-# compute_allele_statistics function remains the same...
-# Paste the existing compute_allele_statistics function code here
 #' Compute Neanderthal Allele Statistics
 #' @export
 compute_allele_statistics <- function(merged_df) {
@@ -241,8 +230,6 @@ compute_allele_statistics <- function(merged_df) {
 }
 
 
-# calculate_neanderthal_alleles function remains the same...
-# Paste the existing calculate_neanderthal_alleles function code here
 #' Calculate Neanderthal Alleles Summary
 #' @export
 calculate_neanderthal_alleles <- function(user_file) {

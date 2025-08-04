@@ -25,7 +25,6 @@ paint_mc <- function(user_snps, ref_freq, block_n = 50, iter = 150, thresh = 0.8
   dt <- merge(user_snps, ref_freq, by = c("SNP","CHR"))
   if (nrow(dt) < 100) stop("Too few overlapping AISNPs after merge")
 
-  # 3b) Make sure our positions are numeric (so we can later divide by 1e6)
   dt[, POS := as.numeric(POS)]
   if (any(is.na(dt$POS))) stop("Some POS values could not be turned into numeric – check your input file")
 
@@ -101,7 +100,7 @@ paint_mc <- function(user_snps, ref_freq, block_n = 50, iter = 150, thresh = 0.8
     .(start=st, end=en, hap1=h1, hap2=h2)
   }, by=.(CHR, block)]
 
-  # 11) (Optional) Smooth flickers
+  # 11)  Smooth flickers
   res <- res[, .(
     start=min(start),
     end  =max(end),

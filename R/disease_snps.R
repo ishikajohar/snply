@@ -82,7 +82,7 @@ read_disease_snp_reference <- function(ref_path = NULL) {
 #' @export
 #' @examples
 #' \dontrun{
-#'   # Assuming user_snps_df is loaded from read_user_data()
+#'   #  user_snps_df is loaded from read_user_data()
 #'   # and includes the rsid column
 #'   disease_results <- check_disease_snps(user_snps_df)
 #'   print(disease_results)
@@ -160,7 +160,6 @@ check_disease_snps <- function(user_data, disease_ref = NULL) {
   # Calculate risk allele count for matched SNPs
   results <- merged_data %>%
     # Use the user's genotype column (might be genotype.user if suffix added, check join)
-    # Assuming 'genotype' comes from user data correctly without suffix here
     mutate(
       your_genotype = as.character(.data$genotype), # Use the user's genotype
       genotype_clean = ifelse(nchar(.data$your_genotype) == 2 & grepl("^[ACGTDI]{2}$", .data$your_genotype), .data$your_genotype, "--"),
