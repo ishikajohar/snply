@@ -10,7 +10,7 @@ These functions are inspired by academic projects like the Interpretome, which d
 # installation
 devtools::install_github(
   "ishikajohar/snply",
-  ref = "feature/neanderthal",
+  ref = "master",
 )
 ```
 
