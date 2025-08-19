@@ -1,4 +1,4 @@
-# Snply <img src="man/figures/logo.png" align="right" width="120"/>
+# Snply 
 
 Snply is an R package (in development) that provides a series of genomic analyses through a **Shiny web interface**.  
 The main purpose is to let users upload their **23andMe SNP files** and then run several analyses, such as:
